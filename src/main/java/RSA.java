@@ -11,10 +11,10 @@ import java.security.spec.*;
  */
 public class RSA {
 
-    public PublicKey publicKey;
-    public PrivateKey privateKey;
-    public static final File file = new File("/users/mkyong/filename.txt");
- boon
+    public static PublicKey publicKey;
+    public static PrivateKey privateKey;
+    public static final File file = new File("/Users/EvanKing/Documents/Dev/Academic/Fall2015/CS2024/Final/keys.txt");
+
     private static final String RSA = "RSA";
 
     public RSA() throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
@@ -28,6 +28,7 @@ public class RSA {
         KeyPair keyPair = generator.genKeyPair();
         publicKey = keyPair.getPublic();
         privateKey = keyPair.getPrivate();
+        saveToFile();
     }
 
     public RSA(String publicKey, String privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException, Base64DecodingException, UnsupportedEncodingException {
@@ -85,18 +86,17 @@ public class RSA {
        return fact.generatePrivate(keySpec);
     }
 
-    public void saveToFile(){
-        File file = new File("/users/mkyong/filename.txt");
+    public void saveToFile() throws IOException {
 
-        // if file doesnt exists, then create it
         if (!file.exists()) {
             file.createNewFile();
         }
 
-        FileWriter fw = new FileWriter(file.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(content);
-        bw.close();
+        FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(privateKeyToString(privateKey) + "\n");
+        bufferedWriter.write(publicKeyToString(publicKey));
+        bufferedWriter.close();
 
     }
 

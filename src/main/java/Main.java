@@ -15,9 +15,10 @@ public class Main {
         System.out.println("The public key is: " + RSA.publicKeyToString(rsa.publicKey));
         System.out.println("The private key is: " + RSA.privateKeyToString(rsa.privateKey));
 
-        System.out.println("Encrypted text is: " + cipher.toString());
-        String plainText = rsa.decrypt(cipher);
-        System.out.print("Decrypted text is: " + plainText);
+        RSA rsa2 = new RSA(RSA.publicKeyToString(rsa.publicKey), RSA.privateKeyToString(rsa.privateKey));
 
+        System.out.println("Encrypted text is: " + cipher.toString());
+        String plainText = rsa2.decrypt(cipher);
+        System.out.print("Decrypted text is: " + plainText);
     }
 }

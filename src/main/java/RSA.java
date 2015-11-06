@@ -13,7 +13,8 @@ public class RSA {
 
     public PublicKey publicKey;
     public PrivateKey privateKey;
-
+    public static final File file = new File("/users/mkyong/filename.txt");
+ boon
     private static final String RSA = "RSA";
 
     public RSA() throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
@@ -27,6 +28,11 @@ public class RSA {
         KeyPair keyPair = generator.genKeyPair();
         publicKey = keyPair.getPublic();
         privateKey = keyPair.getPrivate();
+    }
+
+    public RSA(String publicKey, String privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException, Base64DecodingException, UnsupportedEncodingException {
+        this.publicKey = stringToPublicKey(publicKey);
+        this.privateKey = stringToPrivateKey(privateKey);
     }
 
     public byte[] encrypt(String text) {
@@ -77,6 +83,21 @@ public class RSA {
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory fact = KeyFactory.getInstance(RSA);
        return fact.generatePrivate(keySpec);
+    }
+
+    public void saveToFile(){
+        File file = new File("/users/mkyong/filename.txt");
+
+        // if file doesnt exists, then create it
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(content);
+        bw.close();
+
     }
 
 }
